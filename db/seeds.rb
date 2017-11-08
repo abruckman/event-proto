@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-25.times do
+50.times do
   Event.create({name: Faker::Music.instrument, date_start: Faker::Date.forward(200)})
 end
 
@@ -20,5 +20,5 @@ users = User.all
 events = Event.all
 
 users.each_with_object(events) do |user, events|
-  user.events = events.sample(9)
+  user.events = events.sample(6)
 end

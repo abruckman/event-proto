@@ -10,25 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171006021634) do
+ActiveRecord::Schema.define(version: 20171027003338) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "candidacies", force: :cascade do |t|
-    t.integer  "user_id"
     t.integer  "event_id"
-    t.integer  "pairing_id"
-    t.integer  "other_candidacy_id"
     t.boolean  "primary?"
     t.string   "status"
     t.float    "rating"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["event_id"], name: "index_candidacies_on_event_id", using: :btree
-    t.index ["other_candidacy_id"], name: "index_candidacies_on_other_candidacy_id", using: :btree
-    t.index ["pairing_id"], name: "index_candidacies_on_pairing_id", using: :btree
-    t.index ["user_id"], name: "index_candidacies_on_user_id", using: :btree
   end
 
   create_table "events", force: :cascade do |t|
@@ -49,6 +43,13 @@ ActiveRecord::Schema.define(version: 20171006021634) do
     t.datetime "updated_at",      null: false
   end
 
+  create_table "events_pairings", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "pairing_id"
+    t.index ["event_id"], name: "index_events_pairings_on_event_id", using: :btree
+    t.index ["pairing_id"], name: "index_events_pairings_on_pairing_id", using: :btree
+  end
+
   create_table "interests", force: :cascade do |t|
     t.integer  "interest_rank"
     t.boolean  "private?"
@@ -59,6 +60,17 @@ ActiveRecord::Schema.define(version: 20171006021634) do
     t.datetime "updated_at",    null: false
     t.index ["event_id"], name: "index_interests_on_event_id", using: :btree
     t.index ["user_id"], name: "index_interests_on_user_id", using: :btree
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.integer  "pairing_id"
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_likes_on_event_id", using: :btree
+    t.index ["pairing_id"], name: "index_likes_on_pairing_id", using: :btree
+    t.index ["user_id"], name: "index_likes_on_user_id", using: :btree
   end
 
   create_table "pairings", force: :cascade do |t|
@@ -82,6 +94,13 @@ ActiveRecord::Schema.define(version: 20171006021634) do
     t.string   "work"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+  end
+
+  create_table "users_pairings", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "pairing_id"
+    t.index ["pairing_id"], name: "index_users_pairings_on_pairing_id", using: :btree
+    t.index ["user_id"], name: "index_users_pairings_on_user_id", using: :btree
   end
 
 end
