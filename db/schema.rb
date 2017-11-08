@@ -80,6 +80,13 @@ ActiveRecord::Schema.define(version: 20171027003338) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "pairings_users", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "pairing_id"
+    t.index ["pairing_id"], name: "index_pairings_users_on_pairing_id", using: :btree
+    t.index ["user_id"], name: "index_pairings_users_on_user_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
@@ -94,13 +101,6 @@ ActiveRecord::Schema.define(version: 20171027003338) do
     t.string   "work"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-  end
-
-  create_table "users_pairings", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "pairing_id"
-    t.index ["pairing_id"], name: "index_users_pairings_on_pairing_id", using: :btree
-    t.index ["user_id"], name: "index_users_pairings_on_user_id", using: :btree
   end
 
 end
