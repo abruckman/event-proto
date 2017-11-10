@@ -18,6 +18,7 @@ end
 
 users = User.all
 events = Event.all
+pairings = Pairing.all
 
 users.each_with_object(events) do |user, events|
   user.events = events.sample(6)
@@ -26,4 +27,8 @@ end
 users.each do |user|
   user.set_pairs
   user.set_interest_ranks
+end
+
+pairings.each do |pairing|
+  pairing.set_rating
 end

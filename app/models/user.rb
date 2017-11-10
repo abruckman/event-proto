@@ -29,12 +29,19 @@ class User < ApplicationRecord
       unless self.pairs.include?(pair)
         if self.genderCheck(pair)
           new_pairing = Pairing.new({:users=>[self, pair]})
-          new_pairing.save
+          new_pairing.get_events
+          if new_pairing.events.length > 0
+            new_pairing.save
+          end
         end
       end
     end
   end
 
+  def get_interest_rank(event)
+    interest = Interest.find_by user_id: self.id, event_id: event.id
+    interest.interest_rank
+  end
 
   def genderCheck(other)
     if self.gender == 'm' && other.interested_m? == true
@@ -56,8 +63,6 @@ class User < ApplicationRecord
     else
       return false
     end
-
-
   end
 
 
