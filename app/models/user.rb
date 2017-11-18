@@ -27,7 +27,7 @@ class User < ApplicationRecord
     possibles = self.users
     possibles.each do |pair|
       unless self.pairs.include?(pair)
-        if self.genderCheck(pair)
+        if self.gender_check(pair)
           new_pairing = Pairing.new({:users=>[self, pair]})
           new_pairing.get_events
           if new_pairing.events.length > 0
@@ -43,7 +43,7 @@ class User < ApplicationRecord
     interest.interest_rank
   end
 
-  def genderCheck(other)
+  def gender_check(other)
     if self.gender == 'm' && other.interested_m? == true
       if other.gender == 'm' && self.interested_m? == true
         return true
@@ -63,6 +63,11 @@ class User < ApplicationRecord
     else
       return false
     end
+  end
+
+  def priority_event
+    interest =Interest.find_by user_id: self.id, interest_rank: 0
+    return interest.event
   end
 
 
