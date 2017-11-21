@@ -67,8 +67,7 @@ class User < ApplicationRecord
 
   def priority_event
     interest =Interest.find_by user_id: self.id, interest_rank: 0
-    return interest.event
+    interest.event
   end
-
 
 end
