@@ -21,7 +21,7 @@ events = Event.all
 pairings = Pairing.all
 
 users.each_with_object(events) do |user, events|
-  user.events = events.sample(6f)
+  user.events = events.sample(6)
 end
 
 users.each do |user|
