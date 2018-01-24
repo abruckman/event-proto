@@ -57,13 +57,13 @@ RSpec.describe 'users API', type: :request do
   # Test suite for POST /users
   describe 'POST /users' do
     # valid payload
-    let(:valid_attributes) { { title: 'Learn Elm', created_by: '1' } }
+    let(:valid_attributes) { { first_name: 'Drew', last_name:'Drewerson' } }
 
     context 'when the request is valid' do
       before { post '/users', params: valid_attributes, :headers => headers }
 
       it 'creates a user' do
-        expect(json['title']).to eq('Learn Elm')
+        expect(json['first_name']).to eq('Drew')
       end
 
       it 'returns status code 201' do
